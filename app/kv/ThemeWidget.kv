@@ -1,0 +1,190 @@
+<ColorSelector>
+    size: dp(40), dp(40)
+    size_hint: (None, None)
+    canvas:
+        Color:
+            rgba: root.rgb_hex(root.color_name)
+        Ellipse:
+            size: self.size
+            pos: self.pos
+<AccentColorSelector@ColorSelector>
+    on_release:
+        app.theme_cls.accent_palette = root.color_name
+
+<PrimaryColorSelector@ColorSelector>
+    on_release:
+        app.theme_cls.primary_palette = root.color_name
+
+
+<MDThemePicker>
+    size_hint: (None, None)
+    size: dp(284), dp(120) + dp(290)
+    pos_hint: {'center_x': .5, 'center_y': .5}
+    _line_x_1:0
+    _line_x_2:self.width/2
+    canvas:
+        Color:
+            rgb: app.theme_cls.primary_color
+        Rectangle:
+            size: self.width, dp(120)
+            pos: root.pos[0], root.pos[1] + root.height - dp(120)
+        Color:
+            rgb: app.theme_cls.bg_normal
+        Rectangle:
+            size: self.width, dp(290)
+            pos: root.pos[0], root.pos[1] + root.height - (dp(120) + dp(290))
+
+    MDFlatButton:
+        id: close_button
+        pos: root.pos[0] + root.size[0] - self.width - dp(10), root.pos[1] + dp(10)
+        text: "Close"
+        on_release: root.dismiss()
+
+    MDLabel:
+        id: title
+        font_style: "H5"
+        text: "Change theme"
+        size_hint: (None, None)
+        size: dp(160), dp(50)
+        pos_hint: {'center_x': .5, 'center_y': .9}
+        text_color: root.specific_text_color
+    MDBoxLayout:
+        size_hint: (None, None)
+        size: root.width, root.height - dp(135)
+        pos_hint: {'center_x': .5, 'center_y': .475}
+        background_color:app.theme_cls.primary_color
+        id: tab_panel
+        orientation:'vertical'
+        MDBoxLayout:
+            size_hint_y:None
+            height:dp(40)
+            MDFlatButton:
+                id:_btn1
+                increment_width:root.width/2 -dp(40)
+                text:'Theme'
+                color_line:True
+                canvas:
+                    Color:
+                        rgba:app.theme_cls.accent_color if self.color_line else [0,0,0,0]
+                    Line:
+                        width: 2.
+                        rectangle: (self.x, self.y-dp(1), self.width-dp(3), 0)
+                text_color: root.specific_text_color
+                on_release:
+                    _btn2.color_line= False
+                    self.color_line = True
+                    sm.transition.direction = 'right'
+                    sm.current = '_theme'
+            MDFlatButton:
+                id:_btn2
+                increment_width:root.width/2 -dp(40)
+                text:'Mode '
+                theme_text_color:'Custom'
+                color_line:False
+                canvas:
+                    Color:
+                        rgba:app.theme_cls.accent_color if self.color_line else [0,0,0,0]
+                    Line:
+                        width: 2.
+                        rectangle: (self.x, self.y-dp(1), self.width-dp(3), 0)
+
+                text_color: root.specific_text_color
+                on_release:
+                    _btn1.color_line= False
+                    self.color_line = True
+                    sm.transition.direction = 'left'
+                    sm.current = '_mode'
+        ScreenManager:
+            id:sm
+            Screen:
+                name:'_theme'
+                MDGridLayout:
+                    cols:4
+                    spacing:dp(15),dp(5)
+                    padding:dp(10),dp(102),dp(25),dp(25)
+                    size_hint: (None, None)
+                    size: dp(230), root.height
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    halign: 'center'
+                    orientation: 'horizontal'
+                    PrimaryColorSelector:
+                        color_name: 'Red'
+                    PrimaryColorSelector:
+                        color_name: 'Pink'
+                    PrimaryColorSelector:
+                        color_name: 'Purple'
+                    PrimaryColorSelector:
+                        color_name: 'DeepPurple'
+                    PrimaryColorSelector:
+                        color_name: 'Indigo'
+                    PrimaryColorSelector:
+                        color_name: 'Blue'
+                    PrimaryColorSelector:
+                        color_name: 'LightBlue'
+                    PrimaryColorSelector:
+                        color_name: 'Cyan'
+                    PrimaryColorSelector:
+                        color_name: 'Teal'
+                    PrimaryColorSelector:
+                        color_name: 'Green'
+                    PrimaryColorSelector:
+                        color_name: 'LightGreen'
+                    PrimaryColorSelector:
+                        color_name: 'Lime'
+                    PrimaryColorSelector:
+                        color_name: 'Yellow'
+                    PrimaryColorSelector:
+                        color_name: 'Amber'
+                    PrimaryColorSelector:
+                        color_name: 'Orange'
+                    PrimaryColorSelector:
+                        color_name: 'DeepOrange'
+                    PrimaryColorSelector:
+                        color_name: 'Brown'
+                    PrimaryColorSelector:
+                        color_name: 'Gray'
+                    PrimaryColorSelector:
+                        color_name: 'BlueGray'
+
+            Screen:
+                name:'_mode'
+                FloatLayout:
+                    size: self.size
+                    pos: self.pos
+                    BoxLayout:
+                        size_hint: (None, None)
+                        pos_hint: {'center_x': .5, 'center_y': .6}
+                        halign: 'center'
+                        valign: 'center'
+                        spacing: dp(10)
+                        width: dp(210)
+                        height: dp(100)
+                        MDIconButton:
+                            size: dp(100), dp(100)
+                            size_hint: (None, None)
+                            canvas:
+                                Color:
+                                    rgba: 1, 1, 1, 1
+                                Ellipse:
+                                    size: self.size
+                                    pos: self.pos
+                                Color:
+                                    rgba: 0, 0, 0, 1
+                                Line:
+                                    width: 1.
+                                    circle: (self.center_x, self.center_y, dp(50))
+                            on_release:
+                                app.theme_cls.theme_style = 'Light'
+
+                        MDIconButton:
+                            size: dp(100), dp(100)
+                            pos: self.pos
+                            size_hint: (None, None)
+                            canvas:
+                                Color:
+                                    rgba: 0, 0, 0, 1
+                                Ellipse:
+                                    size: self.size
+                                    pos: self.pos
+                            on_release:
+                                app.theme_cls.theme_style = 'Dark'

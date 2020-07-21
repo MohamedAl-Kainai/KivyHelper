@@ -1,0 +1,53 @@
+<ToolbarScreen@Screen>
+    MDBoxLayout:
+        orientation:'vertical'
+        MDToolbar:
+            title:'Toolbar'
+            left_action_items:[['arrow-left',lambda x:app.back_to_menu(root.manager)]]
+            right_action_items:[['code-array',lambda x:app.show_alert_dialog(open('app/kv/ToolbarScreen.kv').read())]]
+
+        MDGridLayout:
+            padding:0,dp(40),0,0
+            spacing:dp(30)
+            cols:1
+            adaptive_height: True
+
+            MDToolbar:
+                title: "MDToolbar"
+                md_bg_color:[0.12941176470588237, 0.5882352941176471, 0.9529411764705882, 1]
+
+
+            MDToolbar:
+                title: "left_action_items"
+                left_action_items: [["dots-vertical", lambda x: app.callback()]]
+                md_bg_color:[0.12941176470588237, 0.5882352941176471, 0.9529411764705882, 1]
+
+
+            MDToolbar:
+                title: "right_action_items"
+                right_action_items: [["dots-vertical", lambda x: app.callback_1()], ["clock", lambda x: app.callback_2()]]
+                md_bg_color:[0.12941176470588237, 0.5882352941176471, 0.9529411764705882, 1]
+
+            MDToolbar:
+                title: "md_bg_color"
+                md_bg_color:[0.12941176470588237, 0.1882352941176471, 0.9529411764705882, 1]
+
+            MDToolbar:
+                title: "specific_text_color"
+                specific_text_color:[0.92941176470588237, 0.2882352941176471, 0.9529411764705882, 1]
+                md_bg_color:[0.12941176470588237, 0.5882352941176471, 0.9529411764705882, 1]
+
+            MDToolbar:
+                title: "elevation"
+                elevation: 10
+                md_bg_color:[0.12941176470588237, 0.5882352941176471, 0.9529411764705882, 1]
+
+
+        MDBoxLayout:
+            MDBottomAppBar:
+                MDToolbar:
+                    md_bg_color:[0.12941176470588237, 0.5882352941176471, 0.9529411764705882, 1]
+                    title: "bottom"
+                    icon: "git"
+                    type: "bottom"
+                    left_action_items: [["menu", lambda x: x]]

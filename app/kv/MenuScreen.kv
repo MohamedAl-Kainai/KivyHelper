@@ -1,0 +1,143 @@
+
+<KivyHelper>:
+    text_widgets:'BUTTONS'
+    image_path:'app/images/buttons.png'
+    orientation:'vertical'
+    manager:None
+    canvas:
+        Color:
+            rgba:1,1,1,1
+        RoundedRectangle:
+            pos:self.pos
+            size:self.size
+            source:root.image_path
+            radius:[dp(15)]*4
+        Color:
+            rgba:app.theme_cls.primary_light[0:-1]+[.3]
+        RoundedRectangle:
+            pos:self.pos
+            size:self.size
+            radius:[dp(15)]*4
+
+    size_hint:None,None
+    size:dp(250),dp(170)
+    radius:[dp(15)]*4
+    on_press:
+        self.wobble()
+    on_release:
+        root.manager.current = root.text_widgets
+
+    MDBoxLayout:
+        orientation:'vertical'
+        pos_hint:{'center_x':.5,'center_y':.5}
+        size_hint_y:None
+        height:dp(40)
+        canvas:
+            Color:
+                rgba:app.theme_cls.bg_dark[0:-1]+[.6] if app.theme_cls.theme_style == 'Dark' else app.theme_cls.bg_darkest[0:-1]+[.8]
+            Rectangle:
+                pos:self.pos
+                size:self.size
+
+        MDLabel:
+            text:root.text_widgets
+            halign:'center'
+            bild:True
+            theme_text_color:'Primary'
+
+
+<MenuScreen>:
+    widgets:widgets
+    MDFloatLayout:
+        MDBoxLayout:
+            md_bg_color:app.theme_cls.bg_dark if app.theme_cls.theme_style == 'Dark' else app.theme_cls.bg_darkest
+            size_hint:1,.2
+            radius:0,0,dp(900),dp(900)
+            pos_hint:{'top':1}
+            padding:0,dp(20),0,0
+
+            MDLabel:
+                text:'Kivymd'
+                theme_text_color:'Primary'
+                halign:'center'
+                font_size:sp(50)
+
+        MDIconButton:
+            icon:'segment'
+            pos:dp(7),root.height-self.size[1]-dp(5)
+            on_release:
+                root.manager.current = 'aboutscreen'
+
+        ScrollView:
+            pos_hint:{'center_x':.5,'center_y':.64}
+            size_hint_y:None
+            height:dp(210)
+            bar_color:0,0,0,0
+
+            MDGridLayout:
+                adaptive_width: True
+                rows:1
+                adaptive_height:True
+                padding:dp(10),dp(30),dp(10),dp(10)
+                spacing:dp(20)
+                id:widgets
+
+        MDFloatLayout:
+            size_hint:None,None
+            size:dp(200),dp(200)
+            pos_hint:{'top':.5,'center_x':.5}
+
+            MDFillRoundFlatIconButton:
+                pos_hint:{'center_x':.5,'center_y':.7}
+                text:(' '*4)+'Kivymd icons'
+                icon:'account-search'
+                on_release:
+                    Window.softinput_mode = ''
+                    root.iconsscreen.close_search()
+                    root.manager.current = 'iconsscreen'
+
+            MDFillRoundFlatIconButton:
+                pos_hint:{'center_x':.5,'center_y':.45}
+                text:(' '*4)+'Hot reload viewer'
+                icon:'code-tags'
+                on_release:
+                    Window.softinput_mode = 'pan'
+                    root.manager.current = 'hotreloadviewer'
+
+            MDFillRoundFlatIconButton:
+                pos_hint:{'center_x':.5,'center_y':.2}
+                text:(' '*4)+'Colors'
+                icon:'format-color-fill'
+                on_release:
+                    toast('Soon...')
+
+    MDBoxLayout:
+        radius:dp(900),dp(900),0,0
+        size_hint_y:None
+        height:dp(150)
+        pos_hint:{'x':0,'y':0}
+        md_bg_color:app.theme_cls.bg_dark if app.theme_cls.theme_style == 'Dark' else app.theme_cls.bg_darkest
+
+    MDTextButton:
+        pos_hint:{'center_x':.5,'y':.1}
+        text:'help me?'
+        custom_color:app.theme_cls.opposite_bg_dark
+
+
+    MDIconButton:
+        icon:'youtube'
+        pos_hint:{'center_x':.3,'y':.03}
+        on_release:
+            OpenUrl('https://www.youtube.com/channel/UCbleO5WKdkXfCn2hVICLyEw')
+
+    MDIconButton:
+        icon:'telegram'
+        pos_hint:{'center_x':.5,'y':.03}
+        on_release:
+            OpenUrl('https://t.me/No_Name_999')
+
+    MDIconButton:
+        icon:'git'
+        pos_hint:{'center_x':.7,'y':.03}
+        on_release:
+            OpenUrl('https://github.com/No-Name-404/')

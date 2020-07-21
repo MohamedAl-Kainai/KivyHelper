@@ -1,0 +1,121 @@
+#:import KivyLexer kivy.extras.highlight.KivyLexer
+#:import HotReloadViewer app.screens.hot_reload_viewer.HotReloadViewer
+#:import Window kivy.core.window.Window
+
+<RightContentCls>
+    disabled: True
+
+    MDIconButton:
+        icon: root.icon
+        user_font_size: "16sp"
+        pos_hint: {"center_y": .5}
+
+    MDLabel:
+        text: root.text
+        font_style: "Caption"
+        size_hint_x: None
+        width: self.texture_size[0]
+        text_size: None, None
+
+<_HotReloadViewer>:
+    MDFloatLayout:
+        MDBoxLayout:
+            orientation:'vertical'
+
+            MDToolbar:
+                title:'HotReloadViewer'
+                left_action_items:[['arrow-left',lambda x:root.menu()]]
+                right_action_items:[['menu-open',lambda x:root.open_menu_tools()]]
+
+            MDBoxLayout:
+                HotReloadViewer:
+                    id:background_theme_color
+                    path: 'app/kv/HotReloadViewerTest.txt'
+                    errors: True
+                    errors_text_color: 1,0,0,1
+                    md_bg_color:[0,0,0,0]
+
+            MDSeparator:
+                height: "3dp"
+                canvas:
+                    Color:
+                        rgba:app.theme_cls.primary_color
+                    Rectangle:
+                        pos:self.pos
+                        size:self.size
+            MDBoxLayout:
+                size_hint_y:.4
+                ScrollView:
+                    CodeInput:
+                        id:boxcode
+                        lexer:KivyLexer()
+                        background_color:app.theme_cls.bg_light if app.theme_cls.theme_style == 'Dark' else app.theme_cls.bg_darkest
+                        size_hint_y:None
+                        height:self.minimum_height
+                        hint_text:'Code '
+                        font_size:sp(15)
+                        use_bubble:False
+                        on_text:
+                            root.update_kv_file(self.text)
+
+            MDSeparator:
+                height: "3dp"
+                canvas:
+                    Color:
+                        rgba:app.theme_cls.primary_color
+                    Rectangle:
+                        pos:self.pos
+                        size:self.size
+
+        MDGridLayout:
+            id:toolsbox
+            cols:2
+            orientation:'vertical'
+            radius:[dp(15),0,0,dp(15)]
+            md_bg_color:app.theme_cls.bg_dark if app.theme_cls.theme_style == 'Dark' else app.theme_cls.bg_darkest
+            size_hint:None, None
+            size:dp(100),self.minimum_height
+            pos_hint:{'right':1.3,'center_y':.5}
+
+            MDIconButton:
+                icon:'content-copy'
+                on_release:
+                    boxcode.copy()
+
+            MDIconButton:
+                icon:'content-paste'
+                on_release:
+                    boxcode.paste()
+
+            MDIconButton:
+                icon:'select-all'
+                on_release:
+                    boxcode.select_all()
+            MDIconButton:
+                icon:'content-cut'
+                on_release:
+                    boxcode.cut()
+
+            MDIconButton:
+                icon:'arrow-left-circle'
+                on_release:
+                    boxcode.do_undo()
+            MDIconButton:
+                icon:'arrow-right-circle'
+                on_release:
+                    boxcode.do_redo()
+
+            MDIconButton:
+                icon:'plus'
+                on_release:
+                    root.plus()
+            MDIconButton:
+                icon:'minus'
+                on_release:
+                    root.minus()
+
+            MDIconButton:
+                icon:'brightness-6'
+                on_release:
+                    background_theme_color.md_bg_color = (app.theme_cls.opposite_bg_normal if\
+                    background_theme_color.md_bg_color == [0, 0, 0, 0.0] else [0, 0, 0, 0.0])
