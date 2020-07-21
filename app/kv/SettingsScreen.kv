@@ -1,0 +1,98 @@
+#:import sys sys
+#:import kivy kivy
+#:import kivymd kivymd
+
+<MDList>
+    spacing:1
+
+<MyOneLineListItem>
+    size_hint_y:None
+    height:dp(48)
+    text:''
+    secondary_text:''
+    theme_text_color:'Primary'
+    MDBoxLayout:
+        md_bg_color:app.theme_cls.bg_dark if app.theme_cls.theme_style == 'Dark' else app.theme_cls.bg_darkest
+        pos:root.pos
+    MDLabel:
+        text:root.text
+        theme_text_color:root.theme_text_color
+        pos:root.pos[0]+dp(20),root.pos[1]
+
+    MDLabel:
+        text:root.secondary_text
+        theme_text_color:'Secondary'
+        pos:root.pos[0]+(root.width-dp(80)),root.pos[1]
+
+<AboutScreen>:
+    MDBoxLayout:
+        orientation:'vertical'
+        MDToolbar:
+            title:'Kivymd helper'
+            left_action_items:[['arrow-left',lambda x:root.back()]]
+        ScrollView:
+            MDBoxLayout:
+                spacing:dp(50)
+                orientation:'vertical'
+                adaptive_height: True
+                MDList:
+                    MyOneLineListItem:
+                        text: "Python"
+                        secondary_text: '3.8.1'
+
+                    MyOneLineListItem:
+                        text: "Kivy "
+                        secondary_text: kivy.__version__
+
+                    MyOneLineListItem:
+                        text: "Kivymd"
+                        secondary_text: kivymd.__version__
+
+                    MyOneLineListItem:
+                        text: "App"
+                        secondary_text: '1.0'
+
+                MDList:
+                    MyOneLineListItem:
+                        text: "Developers"
+
+                    MyOneLineListItem:
+                        text: "App source"
+                        on_release:
+                            OpenUrl('https://github.com/No-Name-404/KivyHelper')
+
+                    MyOneLineListItem:
+                        text: "Support Developers"
+
+                MDList:
+                    MDLabel:
+                        text:' App settings\n\n'
+                        theme_text_color:'Secondary'
+                        font_size:sp(12)
+                    MyOneLineListItem:
+                        text:'Change theme'
+                        on_release:
+                            app.show_theme_picker()
+                    MyOneLineListItem:
+                        text:'Transition'
+
+                MDList:
+                    MDLabel:
+                        text:' Hot reload viewer settings\n\n'
+                        theme_text_color:'Secondary'
+                        font_size:sp(12)
+
+                    MyOneLineListItem:
+                        text:'Errors Color'
+                    MyOneLineListItem:
+                        text:'Size HotReloadViewer widget'
+                    MyOneLineListItem:
+                        text:'Size text input'
+                    MyOneLineListItem:
+                        text:'Keyboard'
+                    MyOneLineListItem:
+                        text:'Save data'
+                        secondary_text: 'on' if app.check_android_permission() else 'off'
+                        on_release:
+                            app.get_android_permission()
+                            self.secondary_text = 'on' if app.check_android_permission() else 'off'

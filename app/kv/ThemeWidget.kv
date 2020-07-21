@@ -1,3 +1,4 @@
+#:import get_hex_from_color kivy.utils.get_hex_from_color
 <ColorSelector>
     size: dp(40), dp(40)
     size_hint: (None, None)
@@ -7,14 +8,11 @@
         Ellipse:
             size: self.size
             pos: self.pos
-<AccentColorSelector@ColorSelector>
-    on_release:
-        app.theme_cls.accent_palette = root.color_name
 
 <PrimaryColorSelector@ColorSelector>
     on_release:
         app.theme_cls.primary_palette = root.color_name
-
+        app.UpdateSettings(type='Color')
 
 <MDThemePicker>
     size_hint: (None, None)
@@ -175,6 +173,8 @@
                                     circle: (self.center_x, self.center_y, dp(50))
                             on_release:
                                 app.theme_cls.theme_style = 'Light'
+                                app.statusbar(app.theme_cls.theme_style)
+                                app.UpdateSettings(type='Color')
 
                         MDIconButton:
                             size: dp(100), dp(100)
@@ -188,3 +188,5 @@
                                     pos: self.pos
                             on_release:
                                 app.theme_cls.theme_style = 'Dark'
+                                app.statusbar(app.theme_cls.theme_style)
+                                app.UpdateSettings(type='Color')

@@ -50,18 +50,20 @@ class KivyHelpApp(MDApp):
     def build(self):
         self.theme_cls.theme_style = self.LoadSettings()['AppTheme']['Style']
         self.theme_cls.primary_palette = self.LoadSettings()['AppTheme']['Primary']
-
+        self.statusbar(self.theme_cls.theme_style)
 
         self.root = Builder.load_string(ROOT)
         self.root.ids.menuscreen.ADD()
 
     @run_on_ui_thread
     def statusbar(self,color):
-        window = activity.getWindow()
-        window.clearFlags(WindowManager.FLAG_TRANSLUCENT_STATUS)
-        window.addFlags(WindowManager.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-        window.setStatusBarColor(Color.parseColor(color))
-        window.setNavigationBarColor(Color.parseColor(color))
+        if platform == 'android':
+            color = '#ececea' if color == 'Light' else '#41403d'
+            window = activity.getWindow()
+            window.clearFlags(WindowManager.FLAG_TRANSLUCENT_STATUS)
+            window.addFlags(WindowManager.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            window.setStatusBarColor(Color.parseColor(color))
+            window.setNavigationBarColor(Color.parseColor(color))
 
     def check_android_permission(self):
         if platform == 'android':

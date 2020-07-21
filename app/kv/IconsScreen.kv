@@ -1,0 +1,49 @@
+<CustomOneLineIconListItem>:
+    on_release:
+        Clipboard.copy(self.icon)
+        toast('copy')
+
+    IconLeftWidget:
+        icon: root.icon
+        on_release:
+            Clipboard.copy(self.icon)
+            toast('copy')
+
+<IconsScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: dp(10)
+
+        MDFloatLayout:
+            size_hint:Toolbar.size_hint
+            size:Toolbar.size
+            MDToolbar:
+                id:Toolbar
+                pos_hint:{'top':1}
+                title:'Kivymd icons'
+                left_action_items: [["arrow-left", lambda x: root.menu()]]
+                right_action_items: [['magnify',lambda x: root.search(self,search_field)]]
+
+            MDTextField:
+                pos_hint:{'top':1,'right':1}
+                line_color_focus:app.theme_cls.opposite_bg_light
+                size_hint:None,None
+                size:0,0
+                opacity:0
+                color_mode:'custom'
+                id: search_field
+                hint_text: 'Search icon'
+                on_text: root.set_list_md_icons(self.text, True)
+
+        RecycleView:
+            id: rv
+            key_viewclass: 'viewclass'
+            key_size: 'height'
+
+            RecycleBoxLayout:
+                padding: dp(10)
+                default_size: None, dp(48)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
+                orientation: 'vertical'
