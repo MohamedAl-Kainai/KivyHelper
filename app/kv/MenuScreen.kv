@@ -52,7 +52,7 @@
         MDBoxLayout:
             md_bg_color:app.theme_cls.bg_dark if app.theme_cls.theme_style == 'Dark' else app.theme_cls.bg_darkest
             size_hint:1,.2
-            radius:0,0,dp(900),dp(900)
+            radius:0,0,dp(200),dp(200)
             pos_hint:{'top':1}
             padding:0,dp(20),0,0
 
@@ -112,9 +112,8 @@
                     toast('Soon...')
 
     MDBoxLayout:
-        radius:dp(900),dp(900),0,0
-        size_hint_y:None
-        height:dp(150)
+        radius:dp(200),dp(200),0,0
+        size_hint_y:.17
         pos_hint:{'x':0,'y':0}
         md_bg_color:app.theme_cls.bg_dark if app.theme_cls.theme_style == 'Dark' else app.theme_cls.bg_darkest
 
